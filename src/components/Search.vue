@@ -46,6 +46,7 @@ export default {
   display: flex;
   gap: 20px;
   height: 34px;
+  justify-content: center;
 }
 
 .input {

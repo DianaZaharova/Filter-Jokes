@@ -1,7 +1,7 @@
 <template>
   <div class="wrap">
     <ul class="list">
-      <JokesItem v-for="joke in jokes" :key="joke.id" :joke="joke" />
+      <JokesItem v-for="joke in jokes" :key="joke.id" :joke="joke" :likedJokesId="likedJokesId" @likedJokes="likedJokes"/>
     </ul>
   </div>
 </template>
@@ -13,7 +13,23 @@ export default {
   name: "JokesList",
   props: ["jokes"],
   data() {
-    return {};
+    return {
+      likedJokesId: [],
+    };
+  },
+  async mounted() {
+    const data = await localStorage.getItem("likedJokes");
+
+    if(data) {
+      this.likedJokesId = JSON.parse(data);
+    }
+  },
+  methods: {
+    likedJokes(id) {
+      (id.length !== 0 && !this.likedJokesId.includes(id)) ? this.likedJokesId.push(Number(id)) : this.likedJokesId.pop(id);
+
+      localStorage.setItem("likedJokes", JSON.stringify(this.likedJokesId))
+    }
   },
   components: { JokesItem },
 };
@@ -31,5 +47,7 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  max-width: 1100px;
+  margin: 0 auto;
 }
 </style>

@@ -1,12 +1,12 @@
 <template>
-  <li class="item">
+  <li class="item" :class="{ active: isLiked }">
     <div>
       <p class="text">{{ joke.setup }}</p>
       <p class="text">{{ joke.delivery }}</p>
       <p class="text">{{ joke.joke }}</p>
     </div>
     <div>
-      <input class="input" type="checkbox" :id="joke.id" :name="joke.id"/>
+      <input class="input" type="checkbox" :id="joke.id" :value="joke.id" checked="isLiked" v-model="isLiked" v-on:change="likedJokes"/>
       <label class="label" :for="joke.id">
         <svg
           class="icon"
@@ -32,17 +32,25 @@
 <script>
 export default {
   name: "JokesItem",
-  props: ["joke"],
+  props: ["joke", "likedJokesId"],
   data() {
     return {
-      likedJokesId: []
+      isLiked: false,
+      likeId: [],
     };
   },
-  mounted() {
+  async mounted() {
+    if(this.likedJokesId?.includes(this.joke.id)) {
+      this.isLiked = true;
+    }
   },
   watch: {
   },
   methods: {
+    likedJokes() {
+      this.isLiked ? this.likeId.push(this.joke.id) : this.likeId.pop(this.joke.id);
+      this.$emit("likedJokes", this.likeId);
+    }
   }
 };
 </script>
@@ -59,6 +67,11 @@ export default {
   padding: 24px;
   cursor: pointer;
   transition: box-shadow 0.2s;
+}
+
+.active {
+  background-color: #F2F7FF;
+  box-shadow: 0px 4px 20px rgba(23, 43, 77, 0.4);
 }
 
 .item:hover {

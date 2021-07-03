@@ -17,18 +17,21 @@ export default {
   },
   data() {
     return {
-      inputValue: "color",
+      inputValue: "",
       jokes: [],
-      searchResult: false,
     };
   },
   async mounted() {
     const res = await fetch(
-      `https://v2.jokeapi.dev/joke/Any?&amount=10`
+      `https://v2.jokeapi.dev/joke/Programming?idRange=0-10&amount=10`
     );
 
-    const jokes = await res.json();
-    this.jokes = jokes.jokes;
+    const result = await res.json();
+    const jokes = result.jokes
+
+    localStorage.setItem("jokes", JSON.stringify(jokes));
+    const data = await localStorage.getItem("jokes");
+    this.jokes = JSON.parse(data);
   },  
   methods: {
   },
