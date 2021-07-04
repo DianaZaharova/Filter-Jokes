@@ -65,7 +65,6 @@ export default {
   box-shadow: 0px 4px 20px rgba(23, 43, 77, 0.08);
   border-radius: 8px;
   padding: 24px;
-  cursor: pointer;
   transition: box-shadow 0.2s;
 }
 
@@ -82,6 +81,7 @@ export default {
   font-style: 14px;
   line-height: 20px;
   margin: 0;
+  user-select: none;
 }
 
 .input {

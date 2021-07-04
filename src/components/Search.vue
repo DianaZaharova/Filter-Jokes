@@ -7,7 +7,7 @@
         name="search"
         placeholder="Введите слово для поиска среди анекдотов"
         id="search"
-        @input="$emit('input', $event.target.value)"
+        v-model="value"
       />
       <button class="button" type="button" @click="search">Поиск</button>
     </form>
@@ -21,10 +21,6 @@ export default {
     return {
       value: "",
     };
-  },
-  model: {
-    prop: "value",
-    event: "input",
   },
   methods: {
     search() {
